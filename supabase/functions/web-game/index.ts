@@ -65,7 +65,7 @@ async function state(session, correctAnswer) {
   if (!mode) throw new Error('Modo não encontrado.');
   const common = {mode: mode.id, total: mode.prizes.length - 1, prizes: mode.prizes};
   if (session.motivo) {
-    const rows = await db(`partidas?select=apelido,valor_ganho,tempo_segundos,acertos,motivo_encerramento&id=eq.${session.id}&limit=1`);
+    const rows = await db(`partidas?select=id,apelido,valor_ganho,tempo_segundos,acertos,motivo_encerramento&id=eq.${session.id}&limit=1`);
     return {...common, finished: true, result: rows[0], correct_answer: correctAnswer ?? null};
   }
   return {
@@ -112,6 +112,11 @@ async function answer(body) {
   const mode = modeForId(session.modo);
   if (!mode) return reply({error: 'Modo não encontrado.'}, 400);
   if (session.motivo || session.indice !== index) return reply(await state(session));
+  const elapsed = body.elapsed_seconds;
+  if (elapsed !== undefined && (typeof elapsed !== 'number' || !Number.isFinite(elapsed)
+      || elapsed < (session.tempo_ativo_segundos ?? 0) || elapsed > 999999999)) {
+    return reply({error: 'Tempo de jogo inválido.'}, 400);
+  }
   let patch;
   let correctAnswer = null;
   if (choice === 'S') {
@@ -128,6 +133,7 @@ async function answer(body) {
       if (next === mode.prizes.length - 1) Object.assign(patch, {motivo: 'concluiu', encerrada_em: new Date().toISOString()});
     }
   }
+  if (elapsed !== undefined) Object.assign(patch, {tempo_ativo_segundos: elapsed});
   const updated = await db(`sessoes_web?id=eq.${id}&indice=eq.${index}&motivo=is.null`, 'PATCH', patch);
   if (!updated.length) {
     const fresh = await db(`sessoes_web?select=*&id=eq.${id}&limit=1`);

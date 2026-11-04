@@ -13,25 +13,27 @@
   <script defer src="game.js"></script>
 </head>
 <body>
+  <a class="skip-link" href="#jogar">Pular para o jogo</a>
   <div class="page-glow" aria-hidden="true"></div>
   <main class="shell">
     <nav class="topbar" aria-label="Navegação principal">
       <a class="brand" href="#inicio" aria-label="Desafio Python, voltar ao início"><span class="brand-mark" aria-hidden="true">✦</span><span>DESAFIO <strong>PYTHON</strong></span></a>
       <div class="top-links"><a href="#jogar">Jogar</a><a href="#regras">Regras</a><a href="#ranking-section">Ranking</a></div>
-      <span class="live-label"><span class="live-dot"></span>Conectado ao banco</span>
+      <span class="live-label" data-state="loading"><span class="live-dot"></span><span id="connection-status">Conectando…</span></span>
     </nav>
     <header class="hero" id="inicio">
       <div class="hero-copy">
-        <p class="eyebrow"><span class="eyebrow-line"></span> A ARENA DE PERGUNTAS ESTÁ ABERTA</p>
-        <h1>Você sabe.<br><em>Você decide.</em><br>Você conquista.</h1>
-        <p class="intro">As luzes acenderam. Escolha entre três desafios, responda sob pressão e faça seu nome subir no placar do milhão.</p>
+        <p class="eyebrow"><span class="eyebrow-line"></span> CONHECIMENTO VALE OURO</p>
+        <h1>Nove perguntas.<br><em>Um milhão</em><br>de possibilidades.</h1>
+        <p class="intro">Do primeiro palpite à última resposta. Teste o que você sabe sobre Python, escolha seu desafio e conquiste seu lugar no ranking.</p>
         <div class="hero-actions"><a class="hero-cta" href="#jogar">Começar a jogar <span aria-hidden="true">↗</span></a><a class="hero-link" href="#regras">Entenda as regras <span aria-hidden="true">↓</span></a></div>
         <div class="hero-metrics"><div><strong>03</strong><span>modos de jogo</span></div><div><strong>15</strong><span>perguntas no acervo</span></div><div><strong>01</strong><span>milhão fictício</span></div></div>
       </div>
       <div class="hero-art" aria-hidden="true">
-        <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
-        <div class="showpiece"><span class="showpiece-kicker">PRÊMIO MÁXIMO</span><span class="showpiece-currency">R$</span><strong>1.000.000</strong><span class="showpiece-cents">,00</span><span class="showpiece-caption">FICTÍCIO · 3 MODOS</span></div>
-        <div class="art-spark spark-a">✦</div><div class="art-spark spark-b">✧</div>
+        <div class="arena-ring ring-outer"></div><div class="arena-ring ring-inner"></div>
+        <div class="arena-star">✦</div>
+        <div class="million-ticket"><span class="ticket-top">DESAFIO PYTHON <span>★</span></span><span class="ticket-label">A ÚLTIMA PERGUNTA VALE</span><span class="ticket-currency">R$</span><strong>1 MILHÃO</strong><span class="ticket-bottom">DE CONHECIMENTO. SEM DINHEIRO REAL.</span></div>
+        <div class="floating-note"><span>09</span><div>PERGUNTAS NO CLÁSSICO<small>Um acerto de cada vez.</small></div></div>
       </div>
     </header>
     <section class="play-section" id="jogar" aria-labelledby="play-title">
@@ -73,6 +75,7 @@
             <p id="result-time"></p>
             <button id="play-again" class="primary-button" type="button">Jogar novamente <span aria-hidden="true">→</span></button>
           </div>
+          <button id="retry-answer" class="primary-button" type="button" hidden>Tentar enviar novamente</button>
           <p id="game-status" role="status" aria-live="polite"></p>
         </div>
         <aside class="prize-card" aria-label="Escada de prêmios fictícios">
@@ -106,7 +109,7 @@
     <section class="board" id="ranking-section" aria-labelledby="board-title">
       <div class="board-heading">
         <div><p class="section-kicker">03 / CLASSIFICAÇÃO</p><h2 id="board-title">O ranking do milhão</h2></div>
-        <p class="board-description">Resultados reais do banco. Uma posição por apelido em cada jogo.</p>
+        <p class="board-description">Os melhores de cada desafio. Seu próximo acerto pode mudar este placar.</p>
       </div>
       <div class="controls" aria-label="Controles do ranking">
         <div class="field"><label for="game">Selecionar jogo</label><select id="game" disabled><option value="">Carregando jogos…</option></select></div>
@@ -121,12 +124,12 @@
       <div class="feedback" id="feedback"><span class="feedback-icon" aria-hidden="true">◇</span><p id="status" role="status" aria-live="polite">Conectando ao banco de dados…</p></div>
       <div class="table-wrap">
         <table id="ranking" hidden>
-          <thead><tr><th scope="col">Posição</th><th scope="col">Jogador</th><th scope="col">Prêmio fictício</th><th scope="col">Tempo</th><th scope="col">Data</th></tr></thead>
+          <thead><tr><th scope="col">Posição</th><th scope="col">Jogador</th><th scope="col">Jogo</th><th scope="col">Prêmio fictício</th><th scope="col">Tempo</th><th scope="col">Data</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
     </section>
-    <footer><span>DESAFIO PYTHON</span><p>Os valores são fictícios e não representam pagamento real.</p></footer>
+    <footer><a class="brand" href="#inicio">✦ DESAFIO PYTHON</a><p>Os valores são fictícios e não representam pagamento real.</p></footer>
   </main>
 </body>
 </html>

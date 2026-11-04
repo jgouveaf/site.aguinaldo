@@ -1,0 +1,20 @@
+[
+  {
+    "table": "perguntas",
+    "direct_read": "blocked",
+    "message": "HTTP 401"
+  },
+  {
+    "table": "partidas",
+    "direct_read": "blocked",
+    "message": "HTTP 401"
+  },
+  {
+    "table": "sessoes_web",
+    "direct_read": "blocked",
+    "message": "HTTP 401"
+  },
+  {
+    "fresh_process_ranking": "PASS"
+  }
+]

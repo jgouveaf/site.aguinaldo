@@ -1,0 +1,294 @@
+Apelido: QA Python 04-11
+Jogo: Desafio Python
+Jogo: Desafio Python | Jogador: QA Python 04-11
+Responda A, B, C ou D. Digite S para desistir.
+
+Questão 1/9 — Fácil — vale R$ 1.000,00
+Qual símbolo inicia um comentário de uma linha em Python?
+A) #
+B) //
+C) <!--
+D) %
+Resposta (A, B, C, D ou S para desistir): A
+Acertou! Prêmio atual: R$ 1.000,00
+
+Questão 2/9 — Fácil — vale R$ 5.000,00
+Qual função lê uma entrada digitada no terminal?
+A) print()
+B) input()
+C) open()
+D) type()
+Resposta (A, B, C, D ou S para desistir): B
+Acertou! Prêmio atual: R$ 5.000,00
+
+Questão 3/9 — Fácil — vale R$ 10.000,00
+Qual tipo representa True e False?
+A) str
+B) int
+C) bool
+D) list
+Resposta (A, B, C, D ou S para desistir): C
+Acertou! Prêmio atual: R$ 10.000,00
+
+Questão 4/9 — Média — vale R$ 25.000,00
+Qual palavra inicia uma função em Python?
+A) function
+B) def
+C) func
+D) lambda
+Resposta (A, B, C, D ou S para desistir): B
+Acertou! Prêmio atual: R$ 25.000,00
+
+Questão 5/9 — Média — vale R$ 50.000,00
+Qual expressão acessa o valor da chave nome no dicionário pessoa?
+A) pessoa.nome
+B) pessoa[nome]
+C) pessoa["nome"]
+D) pessoa->nome
+Resposta (A, B, C, D ou S para desistir): C
+Acertou! Prêmio atual: R$ 50.000,00
+
+Questão 6/9 — Média — vale R$ 100.000,00
+O que retorna len([10, 20, 30])?
+A) 2
+B) 3
+C) 30
+D) Erro
+Resposta (A, B, C, D ou S para desistir): B
+Acertou! Prêmio atual: R$ 100.000,00
+
+Questão 7/9 — Difícil — vale R$ 200.000,00
+Qual é o resultado de list(range(2, 6, 2))?
+A) [2, 4]
+B) [2, 4, 6]
+C) [2, 3, 4, 5]
+D) [4, 6]
+Resposta (A, B, C, D ou S para desistir): A
+Acertou! Prêmio atual: R$ 200.000,00
+
+Questão 8/9 — Difícil — vale R$ 500.000,00
+Qual expressão produz pares (índice, valor) ao percorrer uma lista?
+A) zip(lista)
+B) enumerate(lista)
+C) range(lista)
+D) items(lista)
+Resposta (A, B, C, D ou S para desistir): B
+Acertou! Prêmio atual: R$ 500.000,00
+
+Questão 9/9 — Difícil — vale R$ 1.000.000,00
+O que ocorre com o bloco finally após try e except?
+A) Executa apenas se houver erro
+B) Nunca executa com return
+C) Executa normalmente ao sair do bloco
+D) Executa apenas sem erro
+Resposta (A, B, C, D ou S para desistir): C
+
+Resultado: QA Python 04-11 | 9 acerto(s) | R$ 1.000.000,00 fictícios
+Tempo de jogo: 00:01 (1.354 segundos)
+ID da partida: cb6fa0fb-b19e-423f-9799-900d56941fba
+Partida salva no Supabase e disponível no ranking.
+Apelido: QA Python 04-11
+Jogo: Desafio Rápido
+Jogo: Desafio Rápido | Jogador: QA Python 04-11
+Responda A, B, C ou D. Digite S para desistir.
+
+Questão 1/6 — Fácil — vale R$ 2.000,00
+Qual função mostra texto no terminal em Python?
+A) print()
+B) input()
+C) len()
+D) range()
+Resposta (A, B, C, D ou S para desistir): A
+Acertou! Prêmio atual: R$ 2.000,00
+
+Questão 2/6 — Fácil — vale R$ 10.000,00
+Qual estrutura guarda elementos em ordem e pode ser alterada?
+A) tupla
+B) string
+C) lista
+D) inteiro
+Resposta (A, B, C, D ou S para desistir): C
+Acertou! Prêmio atual: R$ 10.000,00
+
+Questão 3/6 — Média — vale R$ 50.000,00
+O que retorna len([10, 20, 30])?
+A) 2
+B) 3
+C) 30
+D) Erro
+Resposta (A, B, C, D ou S para desistir): B
+Acertou! Prêmio atual: R$ 50.000,00
+
+Questão 4/6 — Média — vale R$ 200.000,00
+Qual comando interrompe um laço imediatamente?
+A) stop
+B) break
+C) pass
+D) continue
+Resposta (A, B, C, D ou S para desistir): B
+Acertou! Prêmio atual: R$ 200.000,00
+
+Questão 5/6 — Difícil — vale R$ 500.000,00
+Qual operador testa identidade entre dois objetos?
+A) ==
+B) in
+C) is
+D) !=
+Resposta (A, B, C, D ou S para desistir): C
+Acertou! Prêmio atual: R$ 500.000,00
+
+Questão 6/6 — Difícil — vale R$ 1.000.000,00
+Qual expressão produz pares (índice, valor) ao percorrer uma lista?
+A) zip(lista)
+B) enumerate(lista)
+C) range(lista)
+D) items(lista)
+Resposta (A, B, C, D ou S para desistir): B
+
+Resultado: QA Python 04-11 | 6 acerto(s) | R$ 1.000.000,00 fictícios
+Tempo de jogo: 00:00 (0.903 segundos)
+ID da partida: 2992ded0-56d2-4091-b941-d134c4efd8a4
+Partida salva no Supabase e disponível no ranking.
+Apelido: QA Python 04-11
+Jogo: Maratona do Milhão
+Jogo: Maratona do Milhão | Jogador: QA Python 04-11
+Responda A, B, C ou D. Digite S para desistir.
+
+Questão 1/15 — Fácil — vale R$ 500,00
+Qual função mostra texto no terminal em Python?
+A) print()
+B) input()
+C) len()
+D) range()
+Resposta (A, B, C, D ou S para desistir): A
+Acertou! Prêmio atual: R$ 500,00
+
+Questão 2/15 — Fácil — vale R$ 1.000,00
+Qual tipo representa True e False?
+A) str
+B) int
+C) bool
+D) list
+Resposta (A, B, C, D ou S para desistir): C
+Acertou! Prêmio atual: R$ 1.000,00
+
+Questão 3/15 — Fácil — vale R$ 2.500,00
+Qual símbolo inicia um comentário de uma linha em Python?
+A) #
+B) //
+C) <!--
+D) %
+Resposta (A, B, C, D ou S para desistir): A
+Acertou! Prêmio atual: R$ 2.500,00
+
+Questão 4/15 — Fácil — vale R$ 5.000,00
+Qual estrutura guarda elementos em ordem e pode ser alterada?
+A) tupla
+B) string
+C) lista
+D) inteiro
+Resposta (A, B, C, D ou S para desistir): C
+Acertou! Prêmio atual: R$ 5.000,00
+
+Questão 5/15 — Fácil — vale R$ 10.000,00
+Qual função lê uma entrada digitada no terminal?
+A) print()
+B) input()
+C) open()
+D) type()
+Resposta (A, B, C, D ou S para desistir): B
+Acertou! Prêmio atual: R$ 10.000,00
+
+Questão 6/15 — Média — vale R$ 20.000,00
+Qual comando interrompe um laço imediatamente?
+A) stop
+B) break
+C) pass
+D) continue
+Resposta (A, B, C, D ou S para desistir): B
+Acertou! Prêmio atual: R$ 20.000,00
+
+Questão 7/15 — Média — vale R$ 40.000,00
+Qual expressão acessa o valor da chave nome no dicionário pessoa?
+A) pessoa.nome
+B) pessoa[nome]
+C) pessoa["nome"]
+D) pessoa->nome
+Resposta (A, B, C, D ou S para desistir): C
+Acertou! Prêmio atual: R$ 40.000,00
+
+Questão 8/15 — Média — vale R$ 75.000,00
+Qual palavra inicia uma função em Python?
+A) function
+B) def
+C) func
+D) lambda
+Resposta (A, B, C, D ou S para desistir): B
+Acertou! Prêmio atual: R$ 75.000,00
+
+Questão 9/15 — Média — vale R$ 125.000,00
+Qual bloco captura uma exceção gerada em try?
+A) else
+B) finally
+C) except
+D) raise
+Resposta (A, B, C, D ou S para desistir): C
+Acertou! Prêmio atual: R$ 125.000,00
+
+Questão 10/15 — Média — vale R$ 200.000,00
+O que retorna len([10, 20, 30])?
+A) 2
+B) 3
+C) 30
+D) Erro
+Resposta (A, B, C, D ou S para desistir): B
+Acertou! Prêmio atual: R$ 200.000,00
+
+Questão 11/15 — Difícil — vale R$ 300.000,00
+O que ocorre com o bloco finally após try e except?
+A) Executa apenas se houver erro
+B) Nunca executa com return
+C) Executa normalmente ao sair do bloco
+D) Executa apenas sem erro
+Resposta (A, B, C, D ou S para desistir): C
+Acertou! Prêmio atual: R$ 300.000,00
+
+Questão 12/15 — Difícil — vale R$ 450.000,00
+Qual é o resultado de list(range(2, 6, 2))?
+A) [2, 4]
+B) [2, 4, 6]
+C) [2, 3, 4, 5]
+D) [4, 6]
+Resposta (A, B, C, D ou S para desistir): A
+Acertou! Prêmio atual: R$ 450.000,00
+
+Questão 13/15 — Difícil — vale R$ 600.000,00
+Qual expressão produz pares (índice, valor) ao percorrer uma lista?
+A) zip(lista)
+B) enumerate(lista)
+C) range(lista)
+D) items(lista)
+Resposta (A, B, C, D ou S para desistir): B
+Acertou! Prêmio atual: R$ 600.000,00
+
+Questão 14/15 — Difícil — vale R$ 800.000,00
+Qual operador testa identidade entre dois objetos?
+A) ==
+B) in
+C) is
+D) !=
+Resposta (A, B, C, D ou S para desistir): C
+Acertou! Prêmio atual: R$ 800.000,00
+
+Questão 15/15 — Difícil — vale R$ 1.000.000,00
+Qual método atualiza um dicionário com as chaves e valores de outro?
+A) merge()
+B) update()
+C) append()
+D) extend()
+Resposta (A, B, C, D ou S para desistir): B
+
+Resultado: QA Python 04-11 | 15 acerto(s) | R$ 1.000.000,00 fictícios
+Tempo de jogo: 00:02 (2.258 segundos)
+ID da partida: ad1ee3c3-306e-48b2-aa2b-bd8c7d700557
+Partida salva no Supabase e disponível no ranking.

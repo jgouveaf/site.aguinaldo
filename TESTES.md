@@ -1,30 +1,63 @@
-# Testes e evidências
+# Testes e evidências — 04/11/2026
 
-## Testes locais automatizados
+## Resultado desta revisão
 
-Comando: `python -m unittest discover -s tests -v`. Os testes cobrem nove acertos e R$ 1.000.000,00, erro na primeira e após acertos, desistência, entradas inválidas, ranking vazio, retomada após falha de conexão e desconexão do servidor. Resultado observado nesta preparação: **6 testes passaram em 04/11/2026**.
+Dez testes unitários passaram no Python 3.12. A validação online concluiu partidas nos três modos, confirmou tempos persistidos iguais aos medidos pelo Python, verificou o ranking real e repetiu o envio final. O navegador concluiu nove acertos, simulou perda da resposta final depois da gravação no servidor e reenviou exatamente o mesmo conteúdo com sucesso.
 
-## Validação do banco online
+## Python local
 
-Projeto criado em 04/11/2026: `https://yserkieipgjqjciouole.supabase.co`. A consulta SQL confirmou 5 perguntas por dificuldade. A API pública retornou o jogo e as linhas de teste do ranking; as tabelas `perguntas` e `partidas` recusaram leitura direta com a chave pública (HTTP 401). A função `web-game` forneceu uma pergunta sem o campo `correta`, registrou um erro na primeira questão e registrou nove acertos com prêmio de R$ 1.000.000,00. O reenvio da última resposta manteve uma única partida no banco. O programa Python realizou uma partida real com o apelido `Teste Python`, salvou R$ 0,00 e apareceu no ranking consultado pelo site. O GitHub Pages publicou `https://jgouveaf.github.io/site.aguinaldo/` e os arquivos `index.html`, `game.js` e `config.js` responderam HTTP 200. A dupla deve completar os itens abaixo com resultados e capturas reais:
+Comando executado: `python -m unittest discover -s tests -v`.
+Saída em `evidencias/testes-python.txt`.
 
-Na primeira execução online do Python, a cadeia TLS apresentada nesta máquina foi rejeitada pelo modo estrito do Python 3.13 por falta do campo Authority Key Identifier. O cliente passou a desligar apenas a checagem estrita de formato do certificado; a validação da autoridade certificadora e do nome do servidor continua ativa. A partida foi repetida com sucesso.
+- Nove acertos: R$ 1.000.000,00, sem somar etapas — PASSOU.
+- Erro na primeira: R$ 0,00; alternativa inválida permite corrigir — PASSOU.
+- Erro após acertos e desistência: conserva o último prêmio — PASSOU.
+- Apelido vazio: solicita nova entrada — PASSOU no fluxo dos testes.
+- Falha de rede: resposta e sessão mantidas; retomada sem nova partida — PASSOU.
+- Resposta final perdida após salvamento: mesmo ID, resposta e tempo reenviados; uma confirmação — PASSOU.
+- Cronômetro: exclui rede, reenvio e tempo no menu; soma só os intervalos de resposta — PASSOU.
+- Ranking vazio e desconexão HTTP transitória — PASSOU.
 
-Após a criação dos modos, o Python 3.13 iniciou e encerrou partidas nos três modos. Partidas de teste completas chegaram a R$ 1.000.000,00 no Rápido (6 acertos) e na Maratona (15 acertos), com resultado registrado no ranking correspondente. Uma desconexão transitória observada na chamada Python passou a ter até três tentativas curtas; se persistir, o programa mostra uma mensagem e volta ao menu. O site foi renderizado em navegador de teste com seleção dos três modos e pódio do ranking. As partidas com apelidos `Teste...` foram removidas depois da validação; as três partidas de `Aguinaldo` permaneceram no banco.
+## Integração real
 
-| Caso | Esperado | Observado e evidência |
-| --- | --- | --- |
-| Salvar partida pelo navegador | Uma linha em `partidas` com jogo, apelido, valor e duração | CONFIRMADO pela função `web-game` |
-| Concluir nove acertos no navegador | R$ 1.000.000,00 e uma linha no banco | CONFIRMADO via API; teste visual pendente |
-| Atualizar site publicado | Mesma partida visível com R$ e mm:ss | PENDENTE |
-| Dois tempos com mesmo valor | Menor tempo primeiro | PENDENTE |
-| Mesmo apelido com várias partidas | Só a melhor aparece; todas permanecem no banco | PENDENTE |
-| Dois jogos | Rankings separados | PENDENTE |
-| Reenvio da última resposta no navegador | Uma única linha por ID | CONFIRMADO via API |
-| Partida no Python e leitura pelo site | Mesmo apelido, prêmio e tempo no ranking | CONFIRMADO via API (`Teste Python`); captura visual pendente |
-| Falha de conexão no programa Python | Não confirmar antes do sucesso; uma única linha por ID | PENDENTE |
-| Reiniciar programa | Resultado permanece no site | PENDENTE |
-| Jogo sem partidas | Mensagem de ranking vazio | PENDENTE |
-| Falha de consulta | Mensagem de erro no site | PENDENTE |
+Execução automatizada de `game.play` com `GameClient` real, sem substituir a conexão nem o relógio. Entradas foram fornecidas por um roteiro que conhece os gabaritos, com espera de 150 ms por resposta. São testes de software, não recordes humanos.
 
-Adicionem capturas reais do terminal, site e banco mostrando a mesma partida. Não fabriquem evidências. Guardem as capturas nesta pasta antes de montar o ZIP final.
+Apelido: **QA Python 04-11**.
+
+- Clássico: 9 acertos; R$ 1.000.000,00; **1,354 s**; ID `cb6fa0fb-b19e-423f-9799-900d56941fba`.
+- Rápido: 6 acertos; R$ 1.000.000,00; **0,903 s**; ID `2992ded0-56d2-4091-b941-d134c4efd8a4`.
+- Maratona: 15 acertos; R$ 1.000.000,00; **2,258 s**; ID `ad1ee3c3-306e-48b2-aa2b-bd8c7d700557`.
+
+A leitura SQL confirmou tempo_ativo_segundos igual a tempo_segundos para as três partidas. Confirmou também 9/6/15 perguntas únicas e as dificuldades na ordem correta. A leitura pública do ranking retornou os mesmos valores. Uma nova execução do Python encontrou os três resultados, comprovando persistência fora da execução original. O reenvio final retornou o mesmo registro.
+
+Arquivos: `evidencias/python-execucao.txt`, `partidas-verificadas.json`, `ranking-python.png` e `permissoes-persistencia.json`. A saída do Python é transcrição real em texto; não foi apresentada como captura nativa do terminal.
+
+## Ranking SQL
+
+`tests/ranking.sql` executado no banco real dentro de BEGIN/ROLLBACK. Todos os registros temporários foram revertidos.
+
+Resultado: PASS para prioridade do prêmio; menor tempo; data mais antiga; ID como desempate; melhor partida por apelido; preservação do histórico; separação entre jogos; ranking vazio e limite de dez resultados.
+
+## Navegador
+
+`python tests/browser_checks.py` executado com Chromium, contra prévia local ligada à função e banco reais.
+
+- Conclusão de nove perguntas sem repetição; ordem 3 fáceis, 3 médias, 3 difíceis — PASSOU.
+- Interceptação da última resposta: o servidor recebeu e salvou, mas o navegador recebeu falha. Botões de resposta foram bloqueados, o botão de reenvio apareceu e o corpo reenviado foi idêntico — PASSOU.
+- Resultado de R$ 1.000.000,00 mostrado e ranking atualizado — PASSOU.
+- Ranking vazio e falha HTTP 503: mensagens correspondentes — PASSOU com respostas de transporte simuladas.
+- Após restaurar a rede e atualizar: ranking voltou — PASSOU.
+- Recarregar a página: resultado Python persistente visível — PASSOU.
+- Larguras 320, 375, 390, 768 e 1440: sem vazamento horizontal da página — PASSOU após corrigir o pódio com três prêmios grandes.
+- Preferência por movimento reduzido — PASSOU.
+- Erros JavaScript não tratados: nenhum observado.
+
+Capturas: `site-desktop.png`, `site-celular.png`, `partida-navegador.png`, `resultado-navegador.png`. Detalhes em `browser-tests.json`. Os testes podem gerar mais de uma partida QA quando repetidos; isso não é duplicação de um mesmo ID.
+
+## Permissões
+
+GET público direto em perguntas, partidas e sessoes_web retornou HTTP 401. O ranking público permaneceu acessível. Os avisos do advisor sobre RLS sem política de leitura nas tabelas privadas e SECURITY DEFINER no ranking correspondem ao desenho existente: tabelas privadas e função pública restrita de leitura, sem escrita de partidas.
+
+## Limites e próximos passos humanos
+
+O teste visual não substitui a demonstração dos integrantes. Falta captura nativa do terminal durante a própria apresentação, além dos dados de turma/sobrenomes e do prompt histórico 22 completo. Não houve envio no Moodle. O tempo fornecido pelo cliente atende ao exercício, mas pode ser manipulado em um cliente modificado; o projeto não é adequado a competição pública com prêmio real.

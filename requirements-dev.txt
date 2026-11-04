@@ -1,0 +1,2 @@
+# Apenas para QA opcional do navegador; o jogo não precisa de dependências.
+playwright==1.60.0

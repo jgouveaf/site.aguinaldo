@@ -9,6 +9,8 @@ const playersCount = document.querySelector('#players-count');
 const topPrize = document.querySelector('#top-prize');
 const updatedAt = document.querySelector('#updated-at');
 const podium = document.querySelector('#podium');
+const connection = document.querySelector('#connection-status');
+let rankingRequest = 0;
 
 const money = value => new Intl.NumberFormat('pt-BR', {style:'currency', currency:'BRL'}).format(value);
 const duration = value => {
@@ -25,6 +27,7 @@ async function api(path, options = {}) {
   }
   const response = await fetch(`${url.replace(/\/$/,'')}/rest/v1/${path}`, {
     ...options,
+    signal: AbortSignal.timeout(15000),
     headers: {'apikey':key, 'Content-Type':'application/json', ...(options.headers || {})},
   });
   if (!response.ok) throw new Error(`Consulta indisponível (HTTP ${response.status}).`);
@@ -34,6 +37,8 @@ async function api(path, options = {}) {
 async function loadGames() {
   status.textContent = 'Carregando jogos do banco de dados…';
   const games = await api('jogos?select=id,nome&order=nome.asc');
+  connection.textContent = 'Banco conectado';
+  connection.parentElement.dataset.state = 'online';
   const order = {'Desafio Python':0, 'Desafio Rápido':1, 'Maratona do Milhão':2};
   games.sort((a,b) => (order[a.nome] ?? 99) - (order[b.nome] ?? 99));
   gameSelect.replaceChildren();
@@ -51,6 +56,7 @@ async function loadGames() {
 }
 
 async function loadRanking() {
+  const requestId = ++rankingRequest;
   tbody.replaceChildren();
   podium.replaceChildren();
   podium.hidden = true;
@@ -61,6 +67,9 @@ async function loadRanking() {
   status.textContent = 'Atualizando ranking…';
   try {
     const rows = await api('rpc/ranking_public', {method:'POST', body:JSON.stringify({p_jogo_id:gameSelect.value})});
+    if (requestId !== rankingRequest) return;
+    connection.textContent = 'Banco conectado';
+    connection.parentElement.dataset.state = 'online';
     if (!rows.length) { status.textContent = 'Ainda não há resultados para este jogo.'; return; }
     for (const row of rows.slice(0, 3)) {
       const card = document.createElement('article');
@@ -76,7 +85,7 @@ async function loadRanking() {
     podium.hidden = false;
     for (const row of rows) {
       const tr = document.createElement('tr');
-      for (const value of [`#${String(row.posicao).padStart(2,'0')}`, row.apelido, money(row.valor_ganho), duration(row.tempo_segundos), date(row.data_hora)]) {
+      for (const value of [`#${String(row.posicao).padStart(2,'0')}`, row.apelido, row.nome_jogo, money(row.valor_ganho), duration(row.tempo_segundos), date(row.data_hora)]) {
         const td = document.createElement('td');
         td.textContent = value;
         tr.append(td);
@@ -90,13 +99,27 @@ async function loadRanking() {
     table.hidden = false;
     feedback.hidden = true;
     status.textContent = `${rows.length} jogador(es) exibido(s).`;
-  } catch (error) { status.textContent = `Falha ao consultar ranking: ${error.message}`; }
+  } catch (error) {
+    if (requestId !== rankingRequest) return;
+    status.textContent = `Falha ao consultar ranking: ${error.message}`;
+    connection.textContent = 'Conexão indisponível';
+    connection.parentElement.dataset.state = 'offline';
+  }
 }
 
 gameSelect.addEventListener('change', loadRanking);
-refreshButton.addEventListener('click', loadRanking);
+refreshButton.addEventListener('click', () => gameSelect.value ? loadRanking() : initialize());
 window.addEventListener('ranking-refresh', event => {
   if (event.detail?.gameId) gameSelect.value = event.detail.gameId;
   loadRanking();
 });
-loadGames().catch(error => { status.textContent = `Falha ao carregar jogos: ${error.message}`; });
+async function initialize() {
+  try { await loadGames(); }
+  catch (error) {
+    status.textContent = `Falha ao carregar jogos: ${error.message}`;
+    connection.textContent = 'Conexão indisponível';
+    connection.parentElement.dataset.state = 'offline';
+    refreshButton.disabled = false;
+  }
+}
+initialize();

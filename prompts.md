@@ -208,3 +208,57 @@ Problemas identificados durante a implementação: a primeira versão enviava a 
 Na integração do Python, o certificado TLS apresentado nesta máquina causou erro `Missing Authority Key Identifier` no modo estrito do Python 3.13. Em `game.py`, a correção desativou apenas `VERIFY_X509_STRICT`, mantendo a verificação da autoridade certificadora e do nome do servidor. O teste online posterior salvou a partida `Teste Python` e a encontrou no ranking público.
 
 Os gabaritos das 15 perguntas foram revisados com o Python Tutorial e a Library Reference: https://docs.python.org/3/tutorial/ e https://docs.python.org/3/library/. A dupla deve fazer sua própria revisão antes da entrega.
+
+
+## Revisão de integridade do registro em 04/11/2026
+
+As entradas 1 a 22 foram herdadas do repositório. Nesta revisão não havia acesso à conversa original para certificar a transcrição. A entrada 22 contém um resumo, não o prompt completo. Recuperar o texto original antes da entrega. Não foi inventado um prompt para preencher essa lacuna. Os responsáveis históricos ainda precisam ser identificados pelos integrantes.
+
+## 23 — 04/11/2026
+
+- Integrante responsável: João Gouvêa Ferreira, conforme identificação enviada nesta conversa; confirmar autoria com o grupo.
+- Ferramenta: Codex. Modelo: não confirmado nesta revisão.
+- Objetivo: verificar publicação e pendências da atividade.
+- Prompt completo:
+
+```text
+Acesse: [https://github.com/jgouveaf/site.aguinaldo/actions](https://github.com/jgouveaf/site.aguinaldo/actions)
+Veja oq falta pfvr
+```
+
+- Contexto: documento AC04_Show_Milhão_v1.docx anexado.
+- Uso: leitura do Actions, repositório e comparação com o enunciado.
+- Arquivos: game.py, README.md, TESTES.md, prompts.md e workflow.
+- Teste: publicação bem-sucedida e HTTP 200; revisão identificou diferença entre tempo local e persistido.
+
+## 24 — 04/11/2026
+
+- Integrante responsável: João Gouvêa Ferreira, conforme identificação enviada; confirmar autoria com o grupo.
+- Ferramenta: Codex. Modelo: não confirmado nesta revisão.
+- Objetivo: corrigir pendências, melhorar visual e fornecer projeto completo.
+- Prompt completo:
+
+```text
+Faça isso, deixe o site mais bonito além disso, e além disso tbm, faça os arquivos, eu só to com o site
+```
+
+- Uso: tempo acumulado por pergunta, reenvio estável, funções Python explícitas, correção do estado de conexão, proteção contra respostas antigas de ranking, visual responsivo, lançadores e pacote completo.
+- Arquivos: game.py, site/, sql/tempo_ativo.sql, supabase/functions/web-game/index.ts, testes, documentação e JOGAR.bat.
+- Testes: dez testes unitários, partidas reais nos três modos, SQL em transação revertida e navegador automatizado; resultados em TESTES.md.
+- Problema encontrado no código desta revisão: três cartões do pódio com prêmio máximo ultrapassavam a largura de 320 pixels. Correção: colunas com minmax(0,1fr), largura mínima zero e quebra do texto do prêmio. Teste: repetição nos cinco tamanhos de tela após a correção.
+
+## 25 — 04/11/2026
+
+- Integrante responsável: João Gouvêa Ferreira, conforme resposta de identificação.
+- Ferramenta: Codex. Modelo: não confirmado nesta revisão.
+- Objetivo: identificar participantes para o pacote.
+- Pergunta do assistente: Quais são os nomes completos dos dois integrantes e a turma? Vou usar esses dados no README e no nome do ZIP; enquanto isso, continuo as correções.
+- Resposta completa:
+
+```text
+João Gouvêa Ferreira, Henrique, João Vitor
+```
+
+- Uso: três nomes mantidos como fornecidos. Turma e dois sobrenomes permanecem não informados; diferença entre grupo de três e dupla documentada.
+- Arquivos: README.md e LEIA_PRIMEIRO.md.
+- Teste: conferência textual; não se aplica teste de código.

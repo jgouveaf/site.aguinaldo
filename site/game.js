@@ -18,6 +18,10 @@ let selectedMode = modeLabels['Desafio Python'];
 let current = null;
 let playingGameId = '';
 let busy = false;
+let pendingAnswer = null;
+let activeSeconds = 0;
+let questionStarted = 0;
+const retryAnswer = document.querySelector('#retry-answer');
 
 const reais = value => new Intl.NumberFormat('pt-BR', {style:'currency', currency:'BRL'}).format(value);
 const tempo = seconds => {
@@ -31,6 +35,7 @@ async function gameRequest(body) {
     method: 'POST',
     headers: {'apikey': window.SUPABASE_PUBLIC_KEY, 'Content-Type': 'application/json'},
     body: JSON.stringify(body),
+    signal: AbortSignal.timeout(15000),
   });
   const data = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(data.error || `Falha de conexão (HTTP ${response.status}).`);
@@ -40,9 +45,10 @@ async function gameRequest(body) {
 function setBusy(value) {
   busy = value;
   startButton.disabled = value || !playGame.value;
-  optionButtons.forEach(button => { button.disabled = value; });
+  optionButtons.forEach(button => { button.disabled = value || !!pendingAnswer; });
   modeOptions.querySelectorAll('button').forEach(button => {button.disabled = value;});
-  quitButton.disabled = value;
+  quitButton.disabled = value || !!pendingAnswer;
+  retryAnswer.disabled = value;
 }
 
 function updateLadder(acertos, finished = false) {
@@ -84,7 +90,7 @@ function showState(data) {
         ? 'Você decidiu encerrar a partida.'
         : `A partida terminou em uma resposta incorreta${data.correct_answer ? `. A resposta certa era ${data.correct_answer}.` : '.'}`;
     document.querySelector('#result-title').textContent = message;
-    document.querySelector('#result-detail').textContent = `${result.acertos} acerto(s) · prêmio fictício`;
+    document.querySelector('#result-detail').textContent = `${result.apelido} · ${selectedMode.name} · ${result.acertos} acerto(s)`;
     document.querySelector('#result-prize').textContent = reais(result.valor_ganho);
     document.querySelector('#result-time').textContent = `Tempo da partida: ${tempo(result.tempo_segundos)}`;
     updateLadder(result.acertos, true);
@@ -102,6 +108,7 @@ function showState(data) {
     button.querySelector('span').textContent = data.question[`alternativa_${button.dataset.answer.toLowerCase()}`];
   }
   updateLadder(data.index);
+  questionStarted = performance.now();
 }
 
 window.addEventListener('games-loaded', event => {
@@ -149,6 +156,8 @@ startForm.addEventListener('submit', async event => {
   setBusy(true);
   gameStatus.textContent = 'Preparando as perguntas…';
   try {
+    activeSeconds = 0;
+    pendingAnswer = null;
     showState(await gameRequest({action:'start', nickname, game_id:playingGameId}));
   } catch (error) { gameStatus.textContent = error.message; }
   finally { setBusy(false); }
@@ -156,15 +165,27 @@ startForm.addEventListener('submit', async event => {
 
 async function sendAnswer(choice) {
   if (busy || !current || current.finished) return;
+  if (!pendingAnswer) {
+    activeSeconds += Math.max(0, (performance.now() - questionStarted) / 1000);
+    pendingAnswer = {action:'answer', session_id:current.session_id, index:current.index,
+      choice, elapsed_seconds:Math.round(activeSeconds * 1000) / 1000};
+  }
   setBusy(true);
   gameStatus.textContent = 'Conferindo resposta…';
   try {
-    showState(await gameRequest({action:'answer', session_id:current.session_id, index:current.index, choice}));
-  } catch (error) { gameStatus.textContent = error.message; }
+    const response = await gameRequest(pendingAnswer);
+    pendingAnswer = null;
+    retryAnswer.hidden = true;
+    showState(response);
+  } catch (error) {
+    gameStatus.textContent = 'Não foi possível confirmar o envio. Sua resposta está guardada; tente novamente.';
+    retryAnswer.hidden = false;
+  }
   finally { setBusy(false); }
 }
 
 optionButtons.forEach(button => button.addEventListener('click', () => sendAnswer(button.dataset.answer)));
+retryAnswer.addEventListener('click', () => sendAnswer(pendingAnswer?.choice));
 quitButton.addEventListener('click', () => sendAnswer('S'));
 playAgain.addEventListener('click', () => {
   current = null;

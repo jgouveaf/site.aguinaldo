@@ -1,0 +1,15 @@
+test_empty_ranking (test_game.GameTests.test_empty_ranking) ... ok
+test_failure_keeps_pending_answer (test_game.GameTests.test_failure_keeps_pending_answer) ... ok
+test_first_error_and_invalid_input (test_game.GameTests.test_first_error_and_invalid_input) ... ok
+test_later_error_and_quit (test_game.GameTests.test_later_error_and_quit) ... ok
+test_lost_final_response_is_idempotent (test_game.GameTests.test_lost_final_response_is_idempotent) ... ok
+test_nine_correct (test_game.GameTests.test_nine_correct) ... ok
+test_prize_is_not_sum (test_game.GameTests.test_prize_is_not_sum) ... ok
+test_remote_disconnect_becomes_game_error (test_game.GameTests.test_remote_disconnect_becomes_game_error) ... ok
+test_time_adds_only_answer_intervals (test_game.GameTests.test_time_adds_only_answer_intervals) ... ok
+test_timer_excludes_retry_and_menu (test_game.GameTests.test_timer_excludes_retry_and_menu) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.029s
+
+OK

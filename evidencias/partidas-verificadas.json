@@ -1,0 +1,80 @@
+[
+  {
+    "game": "Desafio Python",
+    "game_id": "e637c23c-b152-43dd-ae4a-6c54d90b7779",
+    "result": {
+      "id": "cb6fa0fb-b19e-423f-9799-900d56941fba",
+      "apelido": "QA Python 04-11",
+      "valor_ganho": 1000000,
+      "tempo_segundos": 1.354,
+      "acertos": 9,
+      "motivo_encerramento": "concluiu"
+    },
+    "request": [
+      "cb6fa0fb-b19e-423f-9799-900d56941fba",
+      8,
+      "C",
+      1.354
+    ],
+    "ranking": {
+      "posicao": 1,
+      "nome_jogo": "Desafio Python",
+      "apelido": "QA Python 04-11",
+      "valor_ganho": 1000000,
+      "tempo_segundos": 1.354,
+      "data_hora": "2026-11-04T22:29:44.445+00:00"
+    }
+  },
+  {
+    "game": "Desafio Rápido",
+    "game_id": "f2f88281-cc0f-4e85-b7c8-a9e04492dc8d",
+    "result": {
+      "id": "2992ded0-56d2-4091-b941-d134c4efd8a4",
+      "apelido": "QA Python 04-11",
+      "valor_ganho": 1000000,
+      "tempo_segundos": 0.903,
+      "acertos": 6,
+      "motivo_encerramento": "concluiu"
+    },
+    "request": [
+      "2992ded0-56d2-4091-b941-d134c4efd8a4",
+      5,
+      "B",
+      0.903
+    ],
+    "ranking": {
+      "posicao": 1,
+      "nome_jogo": "Desafio Rápido",
+      "apelido": "QA Python 04-11",
+      "valor_ganho": 1000000,
+      "tempo_segundos": 0.903,
+      "data_hora": "2026-11-04T22:29:47.801+00:00"
+    }
+  },
+  {
+    "game": "Maratona do Milhão",
+    "game_id": "5b331a4f-92c1-4861-9b29-472e33e9ae21",
+    "result": {
+      "id": "ad1ee3c3-306e-48b2-aa2b-bd8c7d700557",
+      "apelido": "QA Python 04-11",
+      "valor_ganho": 1000000,
+      "tempo_segundos": 2.258,
+      "acertos": 15,
+      "motivo_encerramento": "concluiu"
+    },
+    "request": [
+      "ad1ee3c3-306e-48b2-aa2b-bd8c7d700557",
+      14,
+      "B",
+      2.258
+    ],
+    "ranking": {
+      "posicao": 1,
+      "nome_jogo": "Maratona do Milhão",
+      "apelido": "QA Python 04-11",
+      "valor_ganho": 1000000,
+      "tempo_segundos": 2.258,
+      "data_hora": "2026-11-04T22:29:54.834+00:00"
+    }
+  }
+]

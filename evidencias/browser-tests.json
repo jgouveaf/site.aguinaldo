@@ -1,0 +1,30 @@
+{
+  "site": "http://127.0.0.1:8765",
+  "nine_correct": true,
+  "unique_questions": 9,
+  "levels": [
+    "Fácil",
+    "Fácil",
+    "Fácil",
+    "Média",
+    "Média",
+    "Média",
+    "Difícil",
+    "Difícil",
+    "Difícil"
+  ],
+  "lost_final_response_retry": true,
+  "identical_resend_payload": true,
+  "empty_and_error_ui": true,
+  "persisted_after_reload": true,
+  "viewport_widths_without_overflow": [
+    320,
+    375,
+    390,
+    768,
+    1440
+  ],
+  "reduced_motion": true,
+  "javascript_errors": [],
+  "session_id": "cddb1929-3a6d-4c70-b515-5edaf90e59d6"
+}

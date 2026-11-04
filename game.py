@@ -66,9 +66,10 @@ class GameClient:
     def start(self, nickname, game_id):
         return self.request("/functions/v1/web-game", {"action": "start", "nickname": nickname, "game_id": game_id})
 
-    def answer(self, session_id, index, choice):
+    def answer(self, session_id, index, choice, elapsed):
         return self.request("/functions/v1/web-game", {
             "action": "answer", "session_id": session_id, "index": index, "choice": choice,
+            "elapsed_seconds": elapsed,
         })
 
 
@@ -77,9 +78,28 @@ class PendingGame:
     nickname: str
     game_id: str
     state: dict
-    start_time: float
-    network_seconds: float = 0.0
+    elapsed_seconds: float = 0.0
     answer: str | None = None
+
+
+def calculate_prize(correct_count, prizes=None):
+    """O prêmio substitui o anterior; nunca somamos as etapas."""
+    ladder = prizes if prizes is not None else [0, *PRIZES]
+    if not 0 <= correct_count < len(ladder):
+        raise ValueError("Quantidade de acertos inválida.")
+    return ladder[correct_count]
+
+
+def fetch_questions(client, nickname, game_id):
+    """Inicia o sorteio online. A API entrega uma pergunta por vez, sem gabarito."""
+    return client.start(nickname, game_id)
+
+
+def save_answer(client, pending):
+    """Reutiliza sessão, índice, resposta e tempo; a última resposta salva a partida."""
+    state = pending.state
+    return client.answer(state['session_id'], state['index'], pending.answer,
+                         round(pending.elapsed_seconds, 3))
 
 
 def money(amount: int) -> str:
@@ -137,21 +157,20 @@ def play(client, pending=None, input_fn=input, print_fn=print, clock=time.perf_c
     if pending is None:
         nickname = ask_nickname(input_fn, print_fn)
         game = choose_game(client.games(), input_fn, print_fn)
-        state = client.start(nickname, game["id"])
-        pending = PendingGame(nickname, game["id"], state, clock())
+        state = fetch_questions(client, nickname, game["id"])
+        pending = PendingGame(nickname, game["id"], state)
+        print_fn(f"Jogo: {game['nome']} | Jogador: {nickname}")
         print_fn("Responda A, B, C ou D. Digite S para desistir.")
     while True:
         state = pending.state
         if pending.answer is None:
+            question_started = clock()
             show_question(state, print_fn)
             pending.answer = ask_answer(input_fn, print_fn)
-        submitted_at = clock()
+            pending.elapsed_seconds += max(0, clock() - question_started)
         try:
-            response = client.answer(state["session_id"], state["index"], pending.answer)
-            request_seconds = max(0, clock() - submitted_at)
-            pending.network_seconds += request_seconds
+            response = save_answer(client, pending)
         except GameError as exc:
-            pending.network_seconds += max(0, clock() - submitted_at)
             print_fn(f"Não foi possível enviar a resposta: {exc}")
             action = input_fn("Enter para tentar novamente ou M para voltar ao menu: ").strip().upper()
             if action == "M":
@@ -162,9 +181,12 @@ def play(client, pending=None, input_fn=input, print_fn=print, clock=time.perf_c
         pending.answer = None
         if response["finished"]:
             result = response["result"]
-            local_elapsed = max(0, submitted_at - pending.start_time - (pending.network_seconds - request_seconds))
+            expected_prize = calculate_prize(result['acertos'], state.get('prizes'))
+            if expected_prize != result['valor_ganho']:
+                print_fn("Aviso: prêmio retornado diverge da escada do jogo. Confira o registro.")
             print_fn(f"\nResultado: {pending.nickname} | {result['acertos']} acerto(s) | {money(result['valor_ganho'])} fictícios")
-            print_fn(f"Tempo local (perf_counter): {duration(local_elapsed)} | Tempo registrado no banco: {duration(result['tempo_segundos'])}")
+            print_fn(f"Tempo de jogo: {duration(result['tempo_segundos'])} ({result['tempo_segundos']:.3f} segundos)")
+            print_fn(f"ID da partida: {state['session_id']}")
             if response.get("correct_answer"):
                 print_fn(f"Resposta correta: {response['correct_answer']}.")
             print_fn("Partida salva no Supabase e disponível no ranking.")

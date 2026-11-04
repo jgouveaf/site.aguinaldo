@@ -27,7 +27,7 @@ class FakeClient:
     def start(self, nickname, game_id):
         return self.state()
 
-    def answer(self, session_id, index, choice):
+    def answer(self, session_id, index, choice, elapsed):
         if self.fail_once:
             self.fail_once = False
             raise game.GameError("Falha simulada")
@@ -43,7 +43,7 @@ class FakeClient:
             reason = "desistencia" if choice == "S" else "erro"
         result = {"finished": True, "result": {"acertos": self.index,
                   "valor_ganho": game.PRIZES[self.index - 1] if self.index else 0,
-                  "tempo_segundos": 63.2, "motivo_encerramento": reason}}
+                  "tempo_segundos": elapsed, "motivo_encerramento": reason}}
         self.saved.append(result)
         return result
 
@@ -103,6 +103,50 @@ class GameTests(unittest.TestCase):
         resumed = game.play(client, pending, input_fn=inputs([]), print_fn=output.append, clock=Clock())
         self.assertIsNone(resumed)
         self.assertEqual(len(client.saved), 1)
+
+    def test_prize_is_not_sum(self):
+        self.assertEqual(game.calculate_prize(9), 1000000)
+        self.assertEqual(game.calculate_prize(0), 0)
+        self.assertEqual(game.calculate_prize(2), 5000)
+        with self.assertRaises(ValueError):
+            game.calculate_prize(10)
+
+    def test_timer_excludes_retry_and_menu(self):
+        client = FakeClient()
+        client.fail_once = True
+        times = iter([10.0, 17.25])
+        pending = game.play(client, input_fn=inputs(['Ana', 'B', 'M']),
+                            print_fn=lambda _: None, clock=lambda: next(times))
+        self.assertEqual(pending.elapsed_seconds, 7.25)
+        # Retomar com resposta já escolhida não deve sequer consultar o relógio.
+        game.play(client, pending, input_fn=inputs([]), print_fn=lambda _: None,
+                  clock=lambda: self.fail('O tempo de menu/reenvio não pode contar'))
+        self.assertEqual(client.saved[0]['result']['tempo_segundos'], 7.25)
+
+    def test_lost_final_response_is_idempotent(self):
+        client = FakeClient()
+        original = client.answer
+        sent = []
+        def answer(*args):
+            sent.append(args)
+            result = original(*args)
+            if len(sent) == 1:
+                raise game.GameError('Servidor salvou, mas a resposta se perdeu')
+            return result
+        client.answer = answer
+        output = []
+        game.play(client, input_fn=inputs(['Ana', 'B', '']),
+                  print_fn=output.append, clock=Clock())
+        self.assertEqual(sent[0], sent[1])
+        self.assertEqual(len(client.saved), 1)
+        self.assertEqual(sum('Partida salva' in line for line in output), 1)
+
+    def test_time_adds_only_answer_intervals(self):
+        times = iter([0, 5, 100, 108, 500, 512])
+        client = FakeClient()
+        game.play(client, input_fn=inputs(['Ana', 'A', 'A', 'S']),
+                  print_fn=lambda _: None, clock=lambda: next(times))
+        self.assertEqual(client.saved[0]['result']['tempo_segundos'], 25)
 
     def test_empty_ranking(self):
         output = []
