@@ -7,7 +7,14 @@ const gameStatus = document.querySelector('#game-status');
 const optionButtons = [...document.querySelectorAll('#options button')];
 const quitButton = document.querySelector('#quit-button');
 const playAgain = document.querySelector('#play-again');
-const prizeSteps = [1000, 5000, 10000, 25000, 50000, 100000, 200000, 500000, 1000000];
+const modeOptions = document.querySelector('#mode-options');
+const ladder = document.querySelector('#prize-ladder');
+const modeLabels = {
+  'Desafio Python': {name:'Clássico', icon:'✦', detail:'9 perguntas · 3 por nível', tag:'O desafio original', prizes:[0,1000,5000,10000,25000,50000,100000,200000,500000,1000000]},
+  'Desafio Rápido': {name:'Rápido', icon:'ϟ', detail:'6 perguntas · 2 por nível', tag:'Direto ao milhão', prizes:[0,2000,10000,50000,200000,500000,1000000]},
+  'Maratona do Milhão': {name:'Maratona', icon:'★', detail:'15 perguntas · 5 por nível', tag:'Para quem sabe tudo', prizes:[0,500,1000,2500,5000,10000,20000,40000,75000,125000,200000,300000,450000,600000,800000,1000000]},
+};
+let selectedMode = modeLabels['Desafio Python'];
 let current = null;
 let playingGameId = '';
 let busy = false;
@@ -34,6 +41,7 @@ function setBusy(value) {
   busy = value;
   startButton.disabled = value || !playGame.value;
   optionButtons.forEach(button => { button.disabled = value; });
+  modeOptions.querySelectorAll('button').forEach(button => {button.disabled = value;});
   quitButton.disabled = value;
 }
 
@@ -45,8 +53,25 @@ function updateLadder(acertos, finished = false) {
   }
 }
 
+function renderLadder(prizes, name) {
+  ladder.replaceChildren();
+  for (let step = prizes.length - 1; step >= 1; step--) {
+    const item = document.createElement('li');
+    item.dataset.step = step;
+    const label = document.createElement('span');
+    label.textContent = `${String(step).padStart(2,'0')}  •  ${step}º acerto`;
+    const value = document.createElement('strong');
+    value.textContent = reais(prizes[step]);
+    item.append(label, value);
+    ladder.append(item);
+  }
+  document.querySelector('#ladder-mode').textContent = name.toUpperCase();
+  updateLadder(0);
+}
+
 function showState(data) {
   current = data;
+  renderLadder(data.prizes, selectedMode.name);
   gameStatus.textContent = '';
   startForm.hidden = true;
   if (data.finished) {
@@ -54,7 +79,7 @@ function showState(data) {
     resultStage.hidden = false;
     const result = data.result;
     const message = result.motivo_encerramento === 'concluiu'
-      ? 'Parabéns! Você acertou as nove perguntas.'
+      ? `Parabéns! Você acertou as ${data.total} perguntas.`
       : result.motivo_encerramento === 'desistencia'
         ? 'Você decidiu encerrar a partida.'
         : `A partida terminou em uma resposta incorreta${data.correct_answer ? `. A resposta certa era ${data.correct_answer}.` : '.'}`;
@@ -68,10 +93,10 @@ function showState(data) {
   }
   resultStage.hidden = true;
   questionStage.hidden = false;
-  document.querySelector('#question-count').textContent = `Questão ${data.index + 1} de 9`;
+  document.querySelector('#question-count').textContent = `Questão ${data.index + 1} de ${data.total}`;
   document.querySelector('#question-level').textContent = ({facil:'Fácil',media:'Média',dificil:'Difícil'})[data.difficulty];
-  document.querySelector('#progress-fill').style.width = `${(data.index / 9) * 100}%`;
-  document.querySelector('#question-prize').textContent = reais(prizeSteps[data.index]);
+  document.querySelector('#progress-fill').style.width = `${(data.index / data.total) * 100}%`;
+  document.querySelector('#question-prize').textContent = reais(data.prizes[data.index + 1]);
   document.querySelector('#question-text').textContent = data.question.enunciado;
   for (const button of optionButtons) {
     button.querySelector('span').textContent = data.question[`alternativa_${button.dataset.answer.toLowerCase()}`];
@@ -81,14 +106,38 @@ function showState(data) {
 
 window.addEventListener('games-loaded', event => {
   playGame.replaceChildren();
+  modeOptions.replaceChildren();
   for (const game of event.detail) {
+    const mode = modeLabels[game.nome];
+    if (!mode) continue;
     const option = document.createElement('option');
     option.value = game.id;
     option.textContent = game.nome;
     playGame.append(option);
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'mode-choice';
+    button.dataset.gameId = game.id;
+    button.setAttribute('aria-pressed', 'false');
+    const icon = document.createElement('span'); icon.className = 'mode-icon'; icon.textContent = mode.icon;
+    const body = document.createElement('span'); body.className = 'mode-copy';
+    const title = document.createElement('strong'); title.textContent = mode.name;
+    const detail = document.createElement('small'); detail.textContent = mode.detail;
+    const tag = document.createElement('em'); tag.textContent = mode.tag;
+    body.append(title, detail, tag);
+    button.append(icon, body);
+    button.addEventListener('click', () => {
+      playGame.value = game.id;
+      selectedMode = mode;
+      modeOptions.querySelectorAll('button').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      renderLadder(mode.prizes, mode.name);
+    });
+    modeOptions.append(button);
   }
-  playGame.disabled = !event.detail.length;
-  startButton.disabled = !event.detail.length;
+  const first = modeOptions.querySelector('button');
+  if (first) first.click();
+  playGame.disabled = !first;
+  startButton.disabled = !first;
 });
 
 startForm.addEventListener('submit', async event => {
@@ -123,7 +172,7 @@ playAgain.addEventListener('click', () => {
   questionStage.hidden = true;
   startForm.hidden = false;
   gameStatus.textContent = '';
-  updateLadder(0);
+  renderLadder(selectedMode.prizes, selectedMode.name);
   document.querySelector('#nickname').focus();
 });
-updateLadder(0);
+renderLadder(selectedMode.prizes, selectedMode.name);

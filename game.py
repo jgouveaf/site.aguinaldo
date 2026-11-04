@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import http.client
 import os
 import ssl
 import sys
@@ -40,17 +41,21 @@ class GameClient:
             method="POST" if body is not None else "GET",
             headers={"apikey": self.key, "Content-Type": "application/json", "Accept": "application/json"},
         )
-        try:
-            with urllib.request.urlopen(request, timeout=15, context=self.tls_context) as response:
-                return json.loads(response.read())
-        except urllib.error.HTTPError as exc:
+        for attempt in range(3):
             try:
-                message = json.loads(exc.read()).get("error", f"HTTP {exc.code}")
-            except (ValueError, OSError):
-                message = f"HTTP {exc.code}"
-            raise GameError(message) from exc
-        except (urllib.error.URLError, TimeoutError, ValueError) as exc:
-            raise GameError("Falha de conexão com o Supabase.") from exc
+                with urllib.request.urlopen(request, timeout=15, context=self.tls_context) as response:
+                    return json.loads(response.read())
+            except urllib.error.HTTPError as exc:
+                try:
+                    message = json.loads(exc.read()).get("error", f"HTTP {exc.code}")
+                except (ValueError, OSError):
+                    message = f"HTTP {exc.code}"
+                raise GameError(message) from exc
+            except (urllib.error.URLError, TimeoutError, ConnectionError, OSError,
+                    http.client.HTTPException, ValueError) as exc:
+                if attempt == 2:
+                    raise GameError("Falha de conexão com o Supabase. Verifique a internet e tente novamente.") from exc
+                time.sleep(0.4 * (attempt + 1))
 
     def games(self):
         return self.request("/rest/v1/jogos?select=id,nome&order=nome.asc")
@@ -112,7 +117,9 @@ def choose_game(games, input_fn=input, print_fn=print):
 def show_question(state, print_fn=print):
     index = state["index"]
     question = state["question"]
-    print_fn(f"\nQuestão {index + 1}/9 — {LEVEL_NAMES[state['difficulty']]} — vale {money(PRIZES[index])}")
+    total = state.get("total", 9)
+    prizes = state.get("prizes", [0, *PRIZES])
+    print_fn(f"\nQuestão {index + 1}/{total} — {LEVEL_NAMES[state['difficulty']]} — vale {money(prizes[index + 1])}")
     print_fn(question["enunciado"])
     for letter in "abcd":
         print_fn(f"{letter.upper()}) {question['alternativa_' + letter]}")

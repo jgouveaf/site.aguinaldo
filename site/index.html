@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Jogue o Desafio Python, dispute o milhão fictício e acompanhe o ranking online.">
-  <meta name="theme-color" content="#111827">
+  <meta name="theme-color" content="#080b25">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <title>Desafio Python | O jogo do milhão</title>
   <link rel="stylesheet" href="style.css">
@@ -16,28 +16,28 @@
   <div class="page-glow" aria-hidden="true"></div>
   <main class="shell">
     <nav class="topbar" aria-label="Navegação principal">
-      <a class="brand" href="#inicio" aria-label="Desafio Python, voltar ao início"><span class="brand-mark" aria-hidden="true">?</span><span>DESAFIO <strong>PYTHON</strong></span></a>
+      <a class="brand" href="#inicio" aria-label="Desafio Python, voltar ao início"><span class="brand-mark" aria-hidden="true">✦</span><span>DESAFIO <strong>PYTHON</strong></span></a>
       <div class="top-links"><a href="#jogar">Jogar</a><a href="#regras">Regras</a><a href="#ranking-section">Ranking</a></div>
       <span class="live-label"><span class="live-dot"></span>Conectado ao banco</span>
     </nav>
     <header class="hero" id="inicio">
       <div class="hero-copy">
-        <p class="eyebrow"><span class="eyebrow-line"></span> O JOGO DO MILHÃO EM PYTHON</p>
-        <h1>Uma pergunta.<br><em>Uma decisão.</em><br>Um milhão.</h1>
-        <p class="intro">Nove perguntas, três níveis e uma corrida até o prêmio máximo. Jogue agora e veja seu resultado aparecer no ranking em tempo real.</p>
+        <p class="eyebrow"><span class="eyebrow-line"></span> A ARENA DE PERGUNTAS ESTÁ ABERTA</p>
+        <h1>Você sabe.<br><em>Você decide.</em><br>Você conquista.</h1>
+        <p class="intro">As luzes acenderam. Escolha entre três desafios, responda sob pressão e faça seu nome subir no placar do milhão.</p>
         <div class="hero-actions"><a class="hero-cta" href="#jogar">Começar a jogar <span aria-hidden="true">↗</span></a><a class="hero-link" href="#regras">Entenda as regras <span aria-hidden="true">↓</span></a></div>
-        <div class="hero-metrics"><div><strong>09</strong><span>perguntas</span></div><div><strong>03</strong><span>níveis</span></div><div><strong>01</strong><span>grande prêmio</span></div></div>
+        <div class="hero-metrics"><div><strong>03</strong><span>modos de jogo</span></div><div><strong>15</strong><span>perguntas no acervo</span></div><div><strong>01</strong><span>milhão fictício</span></div></div>
       </div>
       <div class="hero-art" aria-hidden="true">
         <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
-        <div class="showpiece"><span class="showpiece-kicker">PRÊMIO MÁXIMO</span><span class="showpiece-currency">R$</span><strong>1.000.000</strong><span class="showpiece-cents">,00</span><span class="showpiece-caption">FICTÍCIO · 9 ACERTOS</span></div>
+        <div class="showpiece"><span class="showpiece-kicker">PRÊMIO MÁXIMO</span><span class="showpiece-currency">R$</span><strong>1.000.000</strong><span class="showpiece-cents">,00</span><span class="showpiece-caption">FICTÍCIO · 3 MODOS</span></div>
         <div class="art-spark spark-a">✦</div><div class="art-spark spark-b">✧</div>
       </div>
     </header>
     <section class="play-section" id="jogar" aria-labelledby="play-title">
       <div class="play-heading">
         <div><p class="section-kicker">01 / A EXPERIÊNCIA</p><h2 id="play-title">O palco é seu.</h2></div>
-        <p>Escolha seu apelido, respire fundo e vá até onde seu conhecimento permitir.</p>
+        <p>Escolha seu desafio, entre no palco e tente chegar ao prêmio máximo.</p>
       </div>
       <div class="play-layout">
         <div class="play-card">
@@ -45,8 +45,10 @@
             <div class="form-header"><span class="form-icon" aria-hidden="true">✦</span><div><strong>Nova partida</strong><span>Prepare-se para a primeira pergunta.</span></div></div>
             <label for="nickname">Seu apelido</label>
             <input id="nickname" name="nickname" maxlength="30" required autocomplete="nickname" placeholder="Como você quer aparecer no ranking?">
-            <label for="play-game">Jogo</label>
-            <select id="play-game" disabled><option value="">Carregando jogos…</option></select>
+            <label id="mode-label">Escolha o modo</label>
+            <div id="mode-options" class="mode-options" role="group" aria-labelledby="mode-label"><p>Carregando modos do banco…</p></div>
+            <label class="sr-only" for="play-game">Jogo</label>
+            <select id="play-game" class="sr-only" disabled><option value="">Carregando jogos…</option></select>
             <button id="start-button" class="primary-button" type="submit" disabled>Iniciar partida <span aria-hidden="true">→</span></button>
           </form>
           <div id="question-stage" hidden>
@@ -74,7 +76,7 @@
           <p id="game-status" role="status" aria-live="polite"></p>
         </div>
         <aside class="prize-card" aria-label="Escada de prêmios fictícios">
-          <p class="section-kicker">SUA JORNADA</p>
+          <p class="section-kicker">SUA JORNADA · <span id="ladder-mode">CLÁSSICO</span></p>
           <h3>Escada de prêmios</h3>
           <ol id="prize-ladder">
             <li data-step="9"><span>9º acerto</span><strong>R$ 1.000.000,00</strong></li>
@@ -95,8 +97,8 @@
       <div class="rules-heading"><div><p class="section-kicker">02 / COMO FUNCIONA</p><h2 id="rules-title">As regras do milhão</h2></div><p>Esta é a versão didática do jogo. Os valores são fictícios e não representam pagamento real.</p></div>
       <div class="rules-grid">
         <article class="rule-card"><span class="rule-number">01</span><h3>Entre com um apelido</h3><p>Escolha um apelido de 1 a 30 caracteres. É esse nome que aparecerá no ranking; não use dados pessoais.</p></article>
-        <article class="rule-card"><span class="rule-number">02</span><h3>Responda nove perguntas</h3><p>São 3 fáceis, 3 médias e 3 difíceis, nessa ordem. Cada pergunta tem quatro alternativas e uma resposta correta. Não há repetição na partida.</p></article>
-        <article class="rule-card"><span class="rule-number">03</span><h3>Avance a cada acerto</h3><p>O prêmio passa ao valor da etapa atual; os valores não são somados. Com nove acertos, você chega a R$ 1.000.000,00 fictícios.</p></article>
+        <article class="rule-card"><span class="rule-number">02</span><h3>Escolha o desafio</h3><p>Rápido tem 6 perguntas, Clássico tem 9 e Maratona tem 15. Em todos, você passa pelos níveis fácil, médio e difícil, sem repetir perguntas na partida.</p></article>
+        <article class="rule-card"><span class="rule-number">03</span><h3>Avance a cada acerto</h3><p>O prêmio passa ao valor da etapa atual; os valores não são somados. Complete qualquer modo para conquistar R$ 1.000.000,00 fictícios.</p></article>
         <article class="rule-card"><span class="rule-number">04</span><h3>Errou ou desistiu?</h3><p>A partida termina no primeiro erro ou quando você decide parar. Você mantém o último prêmio alcançado. Sem acertos, o resultado é R$ 0,00.</p></article>
       </div>
       <div class="rules-bottom"><span class="rules-bottom-icon" aria-hidden="true">◷</span><p><strong>O tempo também conta.</strong> Ele é medido da primeira pergunta ao encerramento. O ranking ordena por maior prêmio e menor tempo. Se ainda houver empate, vale a data mais antiga e depois o ID da partida. Só a melhor partida de cada apelido aparece em cada jogo.</p></div>
@@ -110,6 +112,7 @@
         <div class="field"><label for="game">Selecionar jogo</label><select id="game" disabled><option value="">Carregando jogos…</option></select></div>
         <button id="refresh" type="button" disabled><span aria-hidden="true">↻</span> Atualizar</button>
       </div>
+      <div id="podium" class="podium" hidden aria-label="Três primeiros colocados"></div>
       <div class="stats" id="stats" hidden>
         <div class="stat"><span>Jogadores no top 10</span><strong id="players-count">0</strong></div>
         <div class="stat"><span>Maior prêmio</span><strong id="top-prize">R$ 0,00</strong></div>
@@ -118,7 +121,7 @@
       <div class="feedback" id="feedback"><span class="feedback-icon" aria-hidden="true">◇</span><p id="status" role="status" aria-live="polite">Conectando ao banco de dados…</p></div>
       <div class="table-wrap">
         <table id="ranking" hidden>
-          <thead><tr><th scope="col">Posição</th><th scope="col">Jogo</th><th scope="col">Apelido</th><th scope="col">Prêmio fictício</th><th scope="col">Tempo</th><th scope="col">Data</th></tr></thead>
+          <thead><tr><th scope="col">Posição</th><th scope="col">Jogador</th><th scope="col">Prêmio fictício</th><th scope="col">Tempo</th><th scope="col">Data</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>

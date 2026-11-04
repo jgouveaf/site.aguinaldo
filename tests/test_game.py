@@ -1,6 +1,8 @@
 import sys
+import http.client
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import game
@@ -106,6 +108,13 @@ class GameTests(unittest.TestCase):
         output = []
         game.show_ranking(FakeClient(), print_fn=output.append)
         self.assertIn("Ainda não há resultados", "\n".join(output))
+
+    def test_remote_disconnect_becomes_game_error(self):
+        client = game.GameClient()
+        with patch("game.time.sleep"), patch("game.urllib.request.urlopen", side_effect=http.client.RemoteDisconnected("closed")) as call:
+            with self.assertRaisesRegex(game.GameError, "Falha de conexão"):
+                client.games()
+        self.assertEqual(call.call_count, 3)
 
 
 if __name__ == "__main__":

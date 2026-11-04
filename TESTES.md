@@ -2,13 +2,15 @@
 
 ## Testes locais automatizados
 
-Comando: `python -m unittest discover -s tests -v`. Os testes cobrem nove acertos e R$ 1.000.000,00, erro na primeira e após acertos, desistência, entradas inválidas, ranking vazio e retomada após falha de conexão. Resultado observado nesta preparação: **5 testes passaram em 04/11/2026**.
+Comando: `python -m unittest discover -s tests -v`. Os testes cobrem nove acertos e R$ 1.000.000,00, erro na primeira e após acertos, desistência, entradas inválidas, ranking vazio, retomada após falha de conexão e desconexão do servidor. Resultado observado nesta preparação: **6 testes passaram em 04/11/2026**.
 
 ## Validação do banco online
 
 Projeto criado em 04/11/2026: `https://yserkieipgjqjciouole.supabase.co`. A consulta SQL confirmou 5 perguntas por dificuldade. A API pública retornou o jogo e as linhas de teste do ranking; as tabelas `perguntas` e `partidas` recusaram leitura direta com a chave pública (HTTP 401). A função `web-game` forneceu uma pergunta sem o campo `correta`, registrou um erro na primeira questão e registrou nove acertos com prêmio de R$ 1.000.000,00. O reenvio da última resposta manteve uma única partida no banco. O programa Python realizou uma partida real com o apelido `Teste Python`, salvou R$ 0,00 e apareceu no ranking consultado pelo site. O GitHub Pages publicou `https://jgouveaf.github.io/site.aguinaldo/` e os arquivos `index.html`, `game.js` e `config.js` responderam HTTP 200. A dupla deve completar os itens abaixo com resultados e capturas reais:
 
 Na primeira execução online do Python, a cadeia TLS apresentada nesta máquina foi rejeitada pelo modo estrito do Python 3.13 por falta do campo Authority Key Identifier. O cliente passou a desligar apenas a checagem estrita de formato do certificado; a validação da autoridade certificadora e do nome do servidor continua ativa. A partida foi repetida com sucesso.
+
+Após a criação dos modos, o Python 3.13 iniciou e encerrou partidas nos três modos. Partidas de teste completas chegaram a R$ 1.000.000,00 no Rápido (6 acertos) e na Maratona (15 acertos), com resultado registrado no ranking correspondente. Uma desconexão transitória observada na chamada Python passou a ter até três tentativas curtas; se persistir, o programa mostra uma mensagem e volta ao menu. O site foi renderizado em navegador de teste com seleção dos três modos e pódio do ranking.
 
 | Caso | Esperado | Observado e evidência |
 | --- | --- | --- |

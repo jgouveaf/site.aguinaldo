@@ -183,6 +183,24 @@ Este registro contém os pedidos feitos nesta conversa para gerar o pacote inici
 - Uso: conferidas as execuções do GitHub Actions e o endereço público do site.
 - Teste: o deploy concluiu com sucesso; `index.html`, `game.js` e `config.js` responderam HTTP 200 em `https://jgouveaf.github.io/site.aguinaldo/`.
 
+## 21 — 04/11/2026
+
+- Integrante responsável: usuário desta conversa; nome a preencher pela dupla.
+- Ferramenta e modelo: Codex, GPT-6.
+- Objetivo: ampliar os modos de jogo e melhorar o visual.
+- Prompt completo: `Deixa mais parecido com o jogo do milhão o site, com melhor design, e mais modos de jogo, e faz o ranking mais bonito`
+- Uso: criados os modos Rápido (6), Clássico (9) e Maratona (15), com escadas de prêmios e rankings separados no mesmo Supabase; redesenhados palco, seletor de modo e pódio.
+- Teste: partidas completas Rápido e Maratona registradas com R$ 1.000.000,00; interface renderizada no navegador.
+
+## 22 — 04/11/2026
+
+- Integrante responsável: usuário desta conversa; nome a preencher pela dupla.
+- Ferramenta e modelo: Codex, GPT-6.
+- Objetivo: corrigir desconexão ao executar o programa diretamente com Python 3.13.
+- Prompt completo: relato de erro iniciado por `Erro rodando só em python:` ao executar `outputs/Projeto_Completo/game.py` e escolher `2` no menu; o traceback terminou em `http.client.RemoteDisconnected: Remote end closed connection without response`.
+- Uso: a falha de conexão passou a ser tratada como `GameError`, com até três tentativas curtas para falhas transitórias e mensagem clara no menu.
+- Teste: execução real do ranking no Python 3.13 e teste automatizado de desconexão; seis testes locais passaram.
+
 ## Revisão crítica
 
 Problemas identificados durante a implementação: a primeira versão enviava a chave Supabase também como `Authorization: Bearer`. A documentação atual informa que chaves `sb_secret_` e `sb_publishable_` devem ir somente no cabeçalho `apikey`; o cabeçalho Bearer poderia causar `Invalid JWT`. A correção removeu esse cabeçalho em `game.py` e `site/app.js`. Uma pergunta dizia que `dict.update()` cria um novo dicionário; a pergunta foi corrigida para dizer que ele atualiza o dicionário existente. Fontes: https://supabase.com/docs/guides/getting-started/api-keys e https://docs.python.org/3/library/stdtypes.html#dict.update
