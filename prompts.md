@@ -262,3 +262,12 @@ João Gouvêa Ferreira, Henrique, João Vitor
 - Uso: três nomes mantidos como fornecidos. Turma e dois sobrenomes permanecem não informados; diferença entre grupo de três e dupla documentada.
 - Arquivos: README.md e LEIA_PRIMEIRO.md.
 - Teste: conferência textual; não se aplica teste de código.
+
+## 26 — 04/11/2026
+
+- Responsável: usuário desta conversa; autoria a confirmar pelo grupo.
+- Ferramenta: Codex; modelo não confirmado.
+- Prompt completo: `coloque 60 perguntas pfvr`
+- Objetivo e uso: adicionar 45 perguntas para totalizar 20 por dificuldade, preservando as 15 existentes.
+- Arquivos: sql/setup.sql, sql/ampliar_60_perguntas.sql, index.html, site/index.html, README.md e pacote ZIP.
+- Revisão: documentação oficial Python; expressões dos novos gabaritos executadas em Python. Contagem final verificada no banco.

@@ -49,7 +49,7 @@ Se uma resposta falhar, tente novamente ou volte ao menu e use a opção 3. Não
 
 O projeto atual é `yserkieipgjqjciouole`. Para recriar em outro Supabase, execute no SQL Editor, nesta ordem:
 
-1. `sql/setup.sql`: tabelas, permissões, ranking e 15 perguntas.
+1. `sql/setup.sql`: tabelas, permissões, ranking e 60 perguntas.
 2. `sql/web_game.sql`: sessões e gravação transacional.
 3. `sql/modos.sql`: modos adicionais.
 4. `sql/tempo_ativo.sql`: tempo ativo sem rede/menu.
@@ -77,3 +77,7 @@ O GitHub Actions publica `site/` após os testes locais do Python. As cópias HT
 
 Leia `LEIA_PRIMEIRO.md`. Preencha a turma e os sobrenomes restantes. Confirme o tamanho do grupo. O registro histórico de IA contém um prompt antigo resumido, identificado em `prompts.md`; é necessário recuperar o original para atender integralmente ao enunciado. Não invente esse texto.
 O envio ao Moodle e a apresentação individual precisam ser feitos pelos integrantes.
+
+## Banco ampliado
+
+60 perguntas de Python: 20 fáceis, 20 médias e 20 difíceis. Para atualizar um banco que já tinha as 15 originais, execute `sql/ampliar_60_perguntas.sql`. O setup completo já inclui as 60; executar a ampliação novamente não duplica os enunciados. Os modos continuam com 6, 9 e 15 perguntas por partida.

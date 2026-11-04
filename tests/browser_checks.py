@@ -1,14 +1,14 @@
 """QA de navegador. Use com servidor local; cria uma partida QA identificada no banco."""
 from playwright.sync_api import sync_playwright, expect
 from pathlib import Path
-import ast, json, os
+import ast, json, os, re
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'evidencias';OUT.mkdir(exist_ok=True)
 URL=os.environ.get('QA_SITE_URL','http://127.0.0.1:8765')
 answers={}
 for line in (ROOT/'sql/setup.sql').read_text(encoding='utf-8').splitlines():
  if line.startswith("('"):
-  row=ast.literal_eval(line.rstrip(',').rstrip(';'));answers[row[0]]=row[-2]
+  row=[value.replace("''", "'") for value in re.findall(r"'((?:[^']|'')*)'",line)];answers[row[0]]=row[-2]
 with sync_playwright() as p:
  browser=p.chromium.launch()
  page=browser.new_page(viewport={'width':1440,'height':1000},device_scale_factor=1)
