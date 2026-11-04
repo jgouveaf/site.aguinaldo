@@ -174,6 +174,15 @@ Este registro contém os pedidos feitos nesta conversa para gerar o pacote inici
 - Uso: arquivos do projeto copiados para esse checkout e enviados para `main`.
 - Teste: `git push` concluiu com sucesso no commit `091356c`; GitHub Pages ainda não estava ativo.
 
+## 20 — 04/11/2026
+
+- Integrante responsável: usuário desta conversa; nome a preencher pela dupla.
+- Ferramenta e modelo: Codex, GPT-6.
+- Objetivo: verificar a publicação do site no GitHub Pages.
+- Prompt completo: `ve se vai`
+- Uso: conferidas as execuções do GitHub Actions e o endereço público do site.
+- Teste: o deploy concluiu com sucesso; `index.html`, `game.js` e `config.js` responderam HTTP 200 em `https://jgouveaf.github.io/site.aguinaldo/`.
+
 ## Revisão crítica
 
 Problemas identificados durante a implementação: a primeira versão enviava a chave Supabase também como `Authorization: Bearer`. A documentação atual informa que chaves `sb_secret_` e `sb_publishable_` devem ir somente no cabeçalho `apikey`; o cabeçalho Bearer poderia causar `Invalid JWT`. A correção removeu esse cabeçalho em `game.py` e `site/app.js`. Uma pergunta dizia que `dict.update()` cria um novo dicionário; a pergunta foi corrigida para dizer que ele atualiza o dicionário existente. Fontes: https://supabase.com/docs/guides/getting-started/api-keys e https://docs.python.org/3/library/stdtypes.html#dict.update
