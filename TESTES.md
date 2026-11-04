@@ -10,7 +10,7 @@ Projeto criado em 04/11/2026: `https://yserkieipgjqjciouole.supabase.co`. A cons
 
 Na primeira execução online do Python, a cadeia TLS apresentada nesta máquina foi rejeitada pelo modo estrito do Python 3.13 por falta do campo Authority Key Identifier. O cliente passou a desligar apenas a checagem estrita de formato do certificado; a validação da autoridade certificadora e do nome do servidor continua ativa. A partida foi repetida com sucesso.
 
-Após a criação dos modos, o Python 3.13 iniciou e encerrou partidas nos três modos. Partidas de teste completas chegaram a R$ 1.000.000,00 no Rápido (6 acertos) e na Maratona (15 acertos), com resultado registrado no ranking correspondente. Uma desconexão transitória observada na chamada Python passou a ter até três tentativas curtas; se persistir, o programa mostra uma mensagem e volta ao menu. O site foi renderizado em navegador de teste com seleção dos três modos e pódio do ranking.
+Após a criação dos modos, o Python 3.13 iniciou e encerrou partidas nos três modos. Partidas de teste completas chegaram a R$ 1.000.000,00 no Rápido (6 acertos) e na Maratona (15 acertos), com resultado registrado no ranking correspondente. Uma desconexão transitória observada na chamada Python passou a ter até três tentativas curtas; se persistir, o programa mostra uma mensagem e volta ao menu. O site foi renderizado em navegador de teste com seleção dos três modos e pódio do ranking. As partidas com apelidos `Teste...` foram removidas depois da validação; as três partidas de `Aguinaldo` permaneceram no banco.
 
 | Caso | Esperado | Observado e evidência |
 | --- | --- | --- |

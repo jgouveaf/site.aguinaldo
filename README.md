@@ -40,7 +40,7 @@ O programa Python e o site chamam a mesma função `web-game`, que consulta as p
 
 O SQL nega leitura direta das perguntas, sessões e partidas à chave pública. O site e o Python leem jogos, chamam `ranking_public` e enviam jogadas à função `web-game`. A função consulta o gabarito e valida as respostas no servidor, usando uma chave secreta que não aparece no código distribuído. Este protótipo usa apelidos sem autenticação de jogadores.
 
-O banco contém linhas de teste com apelidos que começam por `Teste`, criadas para confirmar a leitura pública e o jogo no navegador. Elas não são partidas da dupla. A dupla pode removê-las no painel antes da apresentação.
+As partidas com apelidos iniciados por `Teste`, usadas durante a validação, foram removidas do banco em 04/11/2026. As partidas do apelido `Aguinaldo` foram preservadas.
 
 ## Antes da entrega no Moodle
 
