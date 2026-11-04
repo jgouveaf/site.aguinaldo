@@ -156,6 +156,24 @@ Este registro contém os pedidos feitos nesta conversa para gerar o pacote inici
 - Uso: identificado o repositório `jgouveaf/site.aguinaldo`.
 - Teste: repositório público encontrado com permissão de administrador.
 
+## 18 — 04/11/2026
+
+- Integrante responsável: usuário desta conversa; nome a preencher pela dupla.
+- Ferramenta e modelo: Codex, GPT-6.
+- Objetivo: pedir instruções para liberar o envio ao GitHub.
+- Prompt completo: `como que faz`
+- Uso: fornecidas instruções para autorizar a integração do GitHub no repositório.
+- Teste: a integração continuou sem permissão de escrita; usado o checkout local no passo seguinte.
+
+## 19 — 04/11/2026
+
+- Integrante responsável: usuário desta conversa; nome a preencher pela dupla.
+- Ferramenta e modelo: Codex, GPT-6.
+- Objetivo: indicar o checkout local do repositório GitHub.
+- Prompt completo: `C:\Users\26012129\Documents\GitHub\site.aguinaldo`
+- Uso: arquivos do projeto copiados para esse checkout e enviados para `main`.
+- Teste: `git push` concluiu com sucesso no commit `091356c`; GitHub Pages ainda não estava ativo.
+
 ## Revisão crítica
 
 Problemas identificados durante a implementação: a primeira versão enviava a chave Supabase também como `Authorization: Bearer`. A documentação atual informa que chaves `sb_secret_` e `sb_publishable_` devem ir somente no cabeçalho `apikey`; o cabeçalho Bearer poderia causar `Invalid JWT`. A correção removeu esse cabeçalho em `game.py` e `site/app.js`. Uma pergunta dizia que `dict.update()` cria um novo dicionário; a pergunta foi corrigida para dizer que ele atualiza o dicionário existente. Fontes: https://supabase.com/docs/guides/getting-started/api-keys e https://docs.python.org/3/library/stdtypes.html#dict.update
