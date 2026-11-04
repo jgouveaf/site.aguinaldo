@@ -1,0 +1,10 @@
+{
+  "total": 60,
+  "facil": 20,
+  "media": 20,
+  "dificil": 20,
+  "perguntas_anteriores_preservadas": 15,
+  "novas": 45,
+  "validacao": "contagem SQL no banco real e conferência do setup local",
+  "commit": "7638c167c4ae119c5fc659861143730bcd20e89e"
+}
