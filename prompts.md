@@ -271,3 +271,17 @@ João Gouvêa Ferreira, Henrique, João Vitor
 - Objetivo e uso: adicionar 45 perguntas para totalizar 20 por dificuldade, preservando as 15 existentes.
 - Arquivos: sql/setup.sql, sql/ampliar_60_perguntas.sql, index.html, site/index.html, README.md e pacote ZIP.
 - Revisão: documentação oficial Python; expressões dos novos gabaritos executadas em Python. Contagem final verificada no banco.
+
+
+## 27 — 04/11/2026
+
+- Integrante responsável: João Gouvêa Ferreira, em nome do trio.
+- Ferramenta e modelo: Antigravity, Gemini.
+- Objetivo: confirmar composição do grupo como trio e definir a turma 1F para a entrega final.
+- Prompt completo:
+`	ext
+Trio,João Gouvêa, Henrique, João Vitor, 1F
+`
+- Uso: atualização dos metadados no README.md, LEIA_PRIMEIRO.md e geração do pacote final compactado de entrega 1F_JoaoGouvea_Henrique_JoaoVitor.zip.
+- Arquivos envolvidos: README.md, LEIA_PRIMEIRO.md, prompts.md, Turma_Nome1_Nome2.zip / 1F_JoaoGouvea_Henrique_JoaoVitor.zip.
+- Teste: verificação de integridade dos arquivos e do arquivo ZIP.

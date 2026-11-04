@@ -7,9 +7,7 @@ Jogo Python no terminal e jogo no navegador, com perguntas e ranking no mesmo ba
 - João Gouvêa Ferreira
 - Henrique
 - João Vitor
-- Turma: **PREENCHER**
-
-Os três nomes foram informados pelo responsável. O enunciado fala em dupla: confirmar com o professor a participação de três integrantes. Sobrenomes de Henrique e João Vitor ainda não foram informados.
+- Turma: **1F** (Trio)
 
 Repositório: https://github.com/jgouveaf/site.aguinaldo
 Site: https://jgouveaf.github.io/site.aguinaldo/

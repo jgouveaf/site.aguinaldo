@@ -23,17 +23,17 @@ O atalho **ABRIR_SITE.url** abre https://jgouveaf.github.io/site.aguinaldo/.
 
 ## Conferir antes de enviar no Moodle
 
-Participantes informados: João Gouvêa Ferreira, Henrique e João Vitor.
-Preencher turma e sobrenomes de Henrique e João Vitor. Confirmar com o professor os três integrantes, pois o documento pede dupla.
-Recuperar o texto completo do prompt histórico 22 e identificar autores dos prompts antigos. Essa informação não estava disponível nesta conversa.
-As evidências do Python incluem a saída real em texto. Para cumprir literalmente a captura do terminal solicitada no enunciado, executem JOGAR.bat e tirem uma captura de sua própria apresentação, junto do ranking da mesma partida.
+Participantes confirmados: João Gouvêa Ferreira, Henrique e João Vitor (Trio).
+Turma: 1F.
+Recuperar o texto completo do prompt histórico 22 e identificar autores dos prompts antigos se necessário.
+As evidências do Python incluem a saída real em texto. Para cumprir a captura do terminal solicitada no enunciado, executem JOGAR.bat e tirem uma captura de tela do terminal durante a apresentação, junto do ranking da mesma partida no site.
 
-Renomeie o ZIP conforme a orientação do professor (o padrão do enunciado é Turma_Nome1_Nome2.zip). Abra o ZIP para conferir. Envie no Moodle com os links abaixo. O envio não foi realizado por este assistente.
+O ZIP foi gerado como 1F_JoaoGouvea_Henrique_JoaoVitor.zip. Abra o ZIP para conferir. Envie no Moodle com os links e dados abaixo.
 
 ## Texto para o Moodle
 
-Integrantes: João Gouvêa Ferreira, Henrique [sobrenome], João Vitor [sobrenome]
-Turma: [preencher]
+Integrantes: João Gouvêa Ferreira, Henrique e João Vitor
+Turma: 1F
 Nome do jogo: Desafio Python
 Repositório: https://github.com/jgouveaf/site.aguinaldo
 Site: https://jgouveaf.github.io/site.aguinaldo/
