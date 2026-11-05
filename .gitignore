@@ -2,3 +2,6 @@
 __pycache__/
 *.pyc
 *.zip
+!completo.zip
+!1F_JoaoGouvea_Henrique_JoaoVitor.zip
+!site/*.zip
